@@ -22,6 +22,7 @@ This document contains the schedule and requirements for Project 2.
 ## Weekly Schedule
 
 Day 1 (Thursday, July 15th):
+<br>
 Between now and Saturday, you will need to start brainstorming topics with your group and researching potential data sets. Your focus should center around:
   - Selecting a topic
   - Finding a data set
