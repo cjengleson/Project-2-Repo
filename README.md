@@ -2,6 +2,8 @@
 
 # Guidelines for Project 2
 
+Tell a story with your data!
+
 This document contains the schedule and requirements for Project 2.
 
 ## Specific Requirements
