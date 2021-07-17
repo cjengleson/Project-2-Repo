@@ -44,19 +44,25 @@ You will need to create a 1-page proposal that includes:
   - A link to the primary GitHub repository you'll be housing your work in
 
 Day 3 (Tuesday, July 20th):
+<br>
 Project Work
 
 Day 4 (Thursday, July 22nd):
+<br>
 Project Work
 
 Day 5 (Saturday, July 24th):
+<br>
 R-apalooze
 
 Day 6 (Tuesday, July 27th):
+<br>
 Project Work
 
 Day 7 (Thursday, July 29th):
+<br>
 Project Work (1 hr)
+<br>
 Presentations
 
 - - -
