@@ -30,6 +30,7 @@ Between now and Saturday, you will need to start brainstorming topics with your 
   - Creating a 1-page proposal
 
 Day 2 (Saturday, July 17th): Heroku Deployment Lecture & Group Work
+<br>
 You will need to create a 1-page proposal that includes:
   - A brief articulation of your chosen topic and rationale
   - A link to your data set(s) and a screenshot of the metadata if it exists
