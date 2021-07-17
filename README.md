@@ -23,14 +23,18 @@ This document contains the schedule and requirements for Project 2.
 
 Day 1 (Thursday, July 15th):
 <br>
-Between now and Saturday, you will need to start brainstorming topics with your group and researching potential data sets. Your focus should center around:
+Between now and Saturday, you will need to start brainstorming topics with your group and researching potential data sets. 
+<br>
+Your focus should center around:
   - Selecting a topic
   - Finding a data set
   - Finding inspiration
   - "Sketching" your ideal visuals
   - Creating a 1-page proposal
 
-Day 2 (Saturday, July 17th): Heroku Deployment Lecture & Group Work
+Day 2 (Saturday, July 17th): 
+<br>
+Heroku Deployment Lecture & Group Work
 <br>
 You will need to create a 1-page proposal that includes:
   - A brief articulation of your chosen topic and rationale
