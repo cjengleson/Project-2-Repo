@@ -2,7 +2,7 @@
 
 # Guidelines for Project 2
 
-This document contains guidelines, requirements, and suggestions for Project 2.
+This document contains the schedule and requirements for Project 2.
 
 ## Specific Requirements
 
