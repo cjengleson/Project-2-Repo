@@ -21,7 +21,7 @@ This document contains the schedule and requirements for Project 2.
 
 ## Weekly Schedule
 
-Day 1 (July 15th):
+Day 1 (Thursday, July 15th):
 Between now and Saturday, you will need to start brainstorming topics with your group and researching potential data sets. Your focus should center around:
   - Selecting a topic
   - Finding a data set
@@ -29,7 +29,7 @@ Between now and Saturday, you will need to start brainstorming topics with your 
   - "Sketching" your ideal visuals
   - Creating a 1-page proposal
 
-Day 2 (July 17th):
+Day 2 (Saturday, July 17th): Heroku Deployment Lecture & Group Work
 You will need to create a 1-page proposal that includes:
   - A brief articulation of your chosen topic and rationale
   - A link to your data set(s) and a screenshot of the metadata if it exists
@@ -37,7 +37,20 @@ You will need to create a 1-page proposal that includes:
   - A sketch of the final design
   - A link to the primary GitHub repository you'll be housing your work in
 
-Day 3 (July 20th):
+Day 3 (Tuesday, July 20th):
 Project Work
+
+Day 4 (Thursday, July 22nd):
+Project Work
+
+Day 5 (Saturday, July 24th):
+R-apalooze
+
+Day 6 (Tuesday, July 27th):
+Project Work
+
+Day 7 (Thursday, July 29th):
+Project Work (1 hr)
+Presentations
 
 - - -
