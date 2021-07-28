@@ -168,6 +168,13 @@ body {
 }
 
 /* Styling the graphs */
+#heatmap {
+    position: relative;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
 #heatmap h1 {
     position: relative;
     text-align: center;
@@ -180,12 +187,6 @@ body {
     text-align: center;
     font-size: 30px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-
-#heatmap {
-    height: 100%;
-    padding: 0;
-    margin: 0;
 }
 
 .legend {
