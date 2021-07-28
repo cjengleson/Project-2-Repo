@@ -4,10 +4,12 @@
         <meta charset="UTF-8" />
         <title>don't play with fireworks</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- Bootstrap CSS -->
         <link 
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"
         />
+        <!-- href index.css styling file -->
         <link rel="stylesheet" href="static/css/style.css" />
     </head>
 
@@ -17,9 +19,10 @@
                 <div class="row">
                     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
                         <div class="container-fluid">
+                            <!-- Create a navigation bar with icon/logos and dropdown menu with associated hyperlinks -->
                             <a class="navbar-brand" href="index.html">
-                                <img class="nav-fire-icon" src="static/images/fire_icon.png" width="50"><span class="logo">Wildfires</span>
-                                <span class="logo1"> don't play with fireworks, kids</span>
+                                <img class="nav-fire-icon" src="static/images/fire_icon.png" width="50"><span class="logo">Oregon Wildfires</span>
+                                <span class="logo1">don't play with fireworks, kids</span>
                             </a>
                             <div class="container-fluid">
                                 <div class="dropdown">
@@ -37,6 +40,7 @@
                     </nav>
                 </div>
             </div>
+            <!-- Create a scrolling parallax feature for the background -->
             <div class="parallax-header text-center">
                 <h1>WILDFIRES</h1>
                 <p>only YOU can prevent them.</p>
@@ -45,11 +49,12 @@
         <div class="container">
             <div class="row margin-top-50">
                 <div class="col-md-2">
+                    <!-- Create a filter search box that filters wildfire searches based on the labels below -->
                     <aside class="filters">
                         <div class="panel panel-default">
                             <div class="panel-heading">Filter Search</div>
                             <div class="panel-body">
-                                <form id= "form">
+                                <form id="form">
                                     <div class="form-group">
                                         <ul class="list-group" id="filters">
                                             <li class="filter list-group-item">
@@ -86,6 +91,7 @@
                                             </li>
                                         </ul>
                                     </div>
+                                    <!-- Create a Search and Reset button for filter table -->
                                     <button id="btnSearch" type="button" class="btn btn-default">Search</button>
                                     <button id="btnReset" type="button" class="btn btn-default">Reset</button>
                                 </form>
@@ -94,6 +100,7 @@
                     </aside>
                 </div>
                 <div class="col-md-10">
+                    <!-- Create table to pull data from associated API -->
                     <div id="table-area" class="">
                         <table id="fire-table" class="table table-striped">
                             <thead>
@@ -117,6 +124,6 @@
         <script src="https://d3js.org/d3.v5.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         <!-- <script src="static/js/data.js"></script> -->
-        <script src="static/js/app.js"></script>        
+        <script src="static/js/app.js"></script>      
     </body>
 </html>

@@ -154,14 +154,14 @@ d3.csv("../../Resources/or_df.csv").then(function(response) {
     ////////////
 
     // create streets tile layer
-    var streets = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-        attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
-        tileSize: 512,
-        maxZoom: 18,
-        zoomOffset: -1,
-        id: "mapbox/streets-v11",
-        accessToken: API_KEY
-    });
+    // var streets = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+    //     attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+    //     tileSize: 512,
+    //     maxZoom: 18,
+    //     zoomOffset: -1,
+    //     id: "mapbox/streets-v11",
+    //     accessToken: API_KEY
+    // });
 
     // create array of decade location objects to loop through
     var decadeLocs = [
@@ -188,7 +188,7 @@ d3.csv("../../Resources/or_df.csv").then(function(response) {
     })
 
     // create map connection to html id == map
-    var myMap = L.map("map", {
+    var myMap = L.map("heatmap", {
         center: [43.8041, -120.5542],
         zoom: 7,
         layers: streets
@@ -197,4 +197,4 @@ d3.csv("../../Resources/or_df.csv").then(function(response) {
     L.control.layers(null, heatlayers).addTo(myMap);
 
 
-});
+})
