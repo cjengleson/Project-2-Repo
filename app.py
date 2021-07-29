@@ -54,6 +54,9 @@ def graphs():
 # def data():
     # return render_template("...html")
 
+# @app.route('/json')
+# def data():
+
 
 if __name__ == '__main__':
     app.run()
