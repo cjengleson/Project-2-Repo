@@ -5,6 +5,8 @@ import os
 
 app = Flask(__name__)
 
+app.listen(process.env.PORT)
+
 ENV = 'prod'
 
 if ENV == 'dev':
