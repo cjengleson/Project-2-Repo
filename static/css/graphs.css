@@ -167,10 +167,12 @@ body {
     }
 }
 
-/* Styling the graphs */
+/* Styling the heatmap from graph.js */
 #heatmap {
-    position: relative;
-    height: 100%;
+    position: fixed;
+    padding: 100px;
+    height: 800px;
+    width: 600px;
     padding: 0;
     margin: 0;
 }
@@ -220,3 +222,4 @@ body {
 .legend .out-of-order {
     color: #007dff;
 }
+

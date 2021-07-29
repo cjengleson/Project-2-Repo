@@ -1,7 +1,7 @@
 // index.js for project 3- wildfires project
 
 // use d3 to read in samples.json located in data directory
-d3.csv("../../Resources/or_df.csv").then((response) => {
+d3.csv("../Resources/or_df.csv").then((response) => {
     // console log for debugging
     console.log(response);
 
