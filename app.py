@@ -42,12 +42,12 @@ class Fires(db.Model):
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    return render_template("templates/index.html")
 
 
-@app.route('/graphs')
+@app.route('/graphs.html')
 def graphs():
-    return render_template("graphs.html")
+    return render_template("templates/graphs.html")
 
 
 # @app.route('/data')
@@ -59,4 +59,4 @@ def graphs():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
