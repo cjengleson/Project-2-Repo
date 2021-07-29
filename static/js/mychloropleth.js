@@ -45,7 +45,7 @@ d3.json(geoPath).then(function(geoData) {
         var reportArray = [];
         
         // initialize decade arrays to hold all data for each year
-        var twenty11 = [];    var twenty13 = [];    var twenty19 = [];  
+        var early = [];    var late = [];   
 
         // loop through response (i.e., the csv) and push each element's information into the respective array
         for (var i = 0; i < response.length; i++) {
@@ -67,39 +67,28 @@ d3.json(geoPath).then(function(geoData) {
 
             // create decade arrays as we loop through entire dataset
             var tempObj = {};
-                // 2011
-            if (year === "2011") {
+                // 1975-1981
+            if (year >= 1975 && year <= 1981) {
                 tempObj["report_date"] = report_date;
                 tempObj["county"] = county;
                 tempObj["total_acres"] = acres;
                 tempObj["general_cause"] = cause;
                 tempObj["fire_year"] = year;
                 tempObj["location"] = [lat,lon];
-                twenty11.push(tempObj);
+                early.push(tempObj);
                 tempObj = {};
             }
-                // 2013
-            else if (year === "2013") {
+                // 2015-2021
+            else if (year >= 2015 && year <= 2021) {
                 tempObj["report_date"] = report_date;
                 tempObj["county"] = county;
                 tempObj["total_acres"] = acres;
                 tempObj["general_cause"] = cause;
                 tempObj["fire_year"] = year;
                 tempObj["location"] = [lat,lon];
-                twenty13.push(tempObj);
+                late.push(tempObj);
                 tempObj = {};
             }
-                // 2019
-            else if (year === "2019") {
-                tempObj["report_date"] = report_date;
-                tempObj["county"] = county;
-                tempObj["total_acres"] = acres;
-                tempObj["general_cause"] = cause;
-                tempObj["fire_year"] = year;
-                tempObj["location"] = [lat,lon];
-                twenty19.push(tempObj);
-                tempObj = {};
-            }  
         }
 
         // find unique countries in geoData 
@@ -110,67 +99,43 @@ d3.json(geoPath).then(function(geoData) {
 
         // loop through each unique county, sum the acres per year and then add to the geoJson a new key representing the specific years acre-total
         uniqueCounties.forEach(county => {
-            var acreSum19 = 0;
-            var acreSum13 = 0;
-            var acreSum11 = 0;
-
-            // 2019 summing and adding to geoData
-            twenty19.forEach(obj => {
+            var earlySum = 0;
+            var lateSum = 0;
+            // 1975-1981 summing and adding to geoData
+            early.forEach(obj => {
                 if(obj.county === county) {
-                    acreSum19+= parseFloat(obj.total_acres);
+                    earlySum+= parseFloat(obj.total_acres);
                 }
-            })
-            geoData.features.forEach(obj => {
-                if(obj.properties.name === county) {
-                    obj.properties["sum19"] = String(acreSum19);
-                }
-            })
+            });
 
-            // 2013 summing and adding
-            twenty13.forEach(obj => {
+            // 2015-2021 summing and adding
+            late.forEach(obj => {
                 if(obj.county === county) {
-                    acreSum13+= parseFloat(obj.total_acres);
+                    lateSum+= parseFloat(obj.total_acres);
                 }
-            })
-            geoData.features.forEach(obj => {
-                if(obj.properties.name === county) {
-                    obj.properties["sum13"] = String(acreSum13);
-                }
-            })
-            // 2011 summing and adding
-            twenty11.forEach(obj => {
-                if(obj.county === county) {
-                    acreSum11+= parseFloat(obj.total_acres);
-                }
-            })
-            geoData.features.forEach(obj => {
-                if(obj.properties.name === county) {
-                    obj.properties["sum11"] = String(acreSum11);
-                }
-            })
-
+            });
+            console.log(`${county}\n1975-1981: ${earlySum}\n2015-2021: ${lateSum}`);
         });
         
     });
-    console.log(geoData);  
 
     ///////////////////////////////////
     // Create new choropleth layers //
     /////////////////////////////////
 
-        ///////////
-        // 2011 // 
-        /////////
-    var geojson11 = L.choropleth(geoData, {
+        ////////////////
+        // 1975-1981 // 
+        //////////////
+    var geojson1975 = L.choropleth(geoData, {
 
         // Define what  property in the features to use
-        valueProperty: "sum11",
+        valueProperty: "sum1975",
 
         // Set color scale
         scale: ["#ffffb2", "#b10026"],
 
         // Number of breaks in step range
-        steps: 7,
+        steps: 9,
 
         // q for quartile, e for equidistant, k for k-means
         mode: "q",
@@ -183,22 +148,22 @@ d3.json(geoPath).then(function(geoData) {
 
         // Binding a pop-up to each layer
         onEachFeature: function(feature, layer) {
-        layer.bindPopup("County: " + feature.properties.name + "<br>Acres burned: <br>" 
-            + feature.properties.sum11); 
+        layer.bindPopup(feature.properties.name + " County<br>Acres burned: <br>" 
+            + feature.properties.sum1975); 
         }
     }).addTo(myMap);
 
 
     // Set up the legend
-    var legend11 = L.control({ position: "bottomright" });
-    legend11.onAdd = function() {
+    var legend1975 = L.control({ position: "bottomright" });
+    legend1975.onAdd = function() {
         var div = L.DomUtil.create("div", "info legend");
-        var limits = geojson11.options.limits;
-        var colors = geojson11.options.colors;
+        var limits = geojson1975.options.limits;
+        var colors = geojson1975.options.colors;
         var labels = [];
 
         // Add min & max
-        var legendInfo = "<h1>Number of Fires 2011</h1>" +
+        var legendInfo = "<h1>Acres Burned 1975-1981</h1>" +
         "<div class=\"labels\">" +
             "<div class=\"min\">" + limits[0] + "</div>" +
             "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
@@ -214,23 +179,19 @@ d3.json(geoPath).then(function(geoData) {
         return div;
     };
 
-    // // Adding legend to the map
-    // legend.addTo(myMap);
-
-
-        ///////////
-        // 2013 //
-        /////////
-    var geojson13 = L.choropleth(geoData, {
+        ////////////////
+        // 2015-2021 //
+        //////////////
+    var geojson2015 = L.choropleth(geoData, {
 
         // Define what  property in the features to use
-        valueProperty: "sum13",
+        valueProperty: "sum2015",
 
         // Set color scale
         scale: ["#ffffb2", "#b10026"],
 
         // Number of breaks in step range
-        steps: 7,
+        steps: 9,
 
         // q for quartile, e for equidistant, k for k-means
         mode: "q",
@@ -243,21 +204,21 @@ d3.json(geoPath).then(function(geoData) {
 
         // Binding a pop-up to each layer
         onEachFeature: function(feature, layer) {
-        layer.bindPopup("County: " + feature.properties.name + "<br>Acres burned: <br>" 
-            + feature.properties.sum13); 
+        layer.bindPopup(feature.properties.name + " County:<br>Acres burned: <br>" 
+            + feature.properties.sum2015); 
         }
     });
 
     // Set up the legend
-    var legend13 = L.control({ position: "bottomright" });
-    legend13.onAdd = function() {
+    var legend2015 = L.control({ position: "bottomright" });
+    legend2015.onAdd = function() {
         var div = L.DomUtil.create("div", "info legend");
-        var limits = geojson13.options.limits;
-        var colors = geojson13.options.colors;
+        var limits = geojson2015.options.limits;
+        var colors = geojson2015.options.colors;
         var labels = [];
 
         // Add min & max
-        var legendInfo = "<h1>Number of Fires 2013</h1>" +
+        var legendInfo = "<h1>Acres Burned 2015-2021</h1>" +
         "<div class=\"labels\">" +
             "<div class=\"min\">" + limits[0] + "</div>" +
             "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
@@ -272,94 +233,28 @@ d3.json(geoPath).then(function(geoData) {
         div.innerHTML += "<ul>" + labels.join("") + "</ul>";
         return div;
     };
-
-    // // Adding legend to the map
-    // // legend.addTo(myMap);
-
-        ///////////
-        // 2019 //
-        /////////
-        var geojson19 = L.choropleth(geoData, {
-
-            // Define what  property in the features to use
-            valueProperty: "sum19",
-    
-            // Set color scale
-            scale: ["#ffffb2", "#b10026"],
-    
-            // Number of breaks in step range
-            steps: 7,
-    
-            // q for quartile, e for equidistant, k for k-means
-            mode: "q",
-            style: {
-            // Border color
-            color: "#fff",
-            weight: 1,
-            fillOpacity: 0.8
-            },
-    
-            // Binding a pop-up to each layer
-            onEachFeature: function(feature, layer) {
-            layer.bindPopup("County: " + feature.properties.name + "<br>Acres burned: <br>" 
-                + feature.properties.sum19); 
-            }
-        });
-        // .addTo(myMap) ^^^^^^^^^^
-    
-        // Set up the legend
-        var legend19 = L.control({ position: "bottomright" });
-        legend19.onAdd = function() {
-            var div = L.DomUtil.create("div", "info legend");
-            var limits = geojson19.options.limits;
-            var colors = geojson19.options.colors;
-            var labels = [];
-    
-            // Add min & max
-            var legendInfo = "<h1>Number of Fires 2019</h1>" +
-            "<div class=\"labels\">" +
-                "<div class=\"min\">" + limits[0] + "</div>" +
-                "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
-            "</div>";
-    
-            div.innerHTML = legendInfo;
-    
-            limits.forEach(function(limit, index) {
-            labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
-            });
-    
-            div.innerHTML += "<ul>" + labels.join("") + "</ul>";
-            return div;
-        };
     
         // Adding legend to the map
-        legend11.addTo(myMap);
-        var currentLegend = legend11;
+        legend1975.addTo(myMap);
+        var currentLegend = legend1975;
 
         myMap.on('baselayerchange', function (eventLayer) {
-            if (eventLayer.name === '2011') {
+            if (eventLayer.name === '1975-1981') {
                 myMap.removeControl(currentLegend);
-                currentLegend = legend11;
-                legend11.addTo(myMap);
+                currentLegend = legend1975;
+                legend1975.addTo(myMap);
             }
-            else if  (eventLayer.name === '2013') {
+            else if  (eventLayer.name === '2015-2021') {
                 myMap.removeControl(currentLegend);
-                currentLegend = legend13;
-                legend13.addTo(myMap);
-            }
-            else if  (eventLayer.name === "2019") {
-               myMap.removeControl(currentLegend);
-                currentLegend = legend19;
-                legend19.addTo(myMap);
+                currentLegend = legend2015;
+                legend2015.addTo(myMap);
             }
           });
     
-//////////////////////////////////////
     // set up choropleth layers and add to map
     var choroplethLayers = {
-        "2011" : geojson11,
-        "2013" : geojson13,
-        "2019" : geojson19
+        "1975-1981" : geojson1975,
+        "2015-2021" : geojson2015
     };
 
     L.control.layers(choroplethLayers).addTo(myMap);
