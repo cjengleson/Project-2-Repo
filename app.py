@@ -50,9 +50,9 @@ def graphs():
     return render_template("graphs.html")
 
 
-@app.route('/data')
-def data():
-    return
+# @app.route('/data')
+# def data():
+    # return render_template("...html")
 
 
 if __name__ == '__main__':
