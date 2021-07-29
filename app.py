@@ -5,6 +5,8 @@ import os
 
 app = Flask(__name__)
 
+app.listen(process.env.PORT)
+
 ENV = 'prod'
 
 if ENV == 'dev':
@@ -42,18 +44,21 @@ class Fires(db.Model):
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    return render_template("templates/index.html")
 
 
-@app.route('/graphs')
+@app.route('/graphs.html')
 def graphs():
-    return render_template("graphs.html")
+    return render_template("templates/graphs.html")
 
 
-@app.route('/data')
-def data():
-    return
+# @app.route('/data')
+# def data():
+    # return render_template("...html")
+
+# @app.route('/json')
+# def data():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

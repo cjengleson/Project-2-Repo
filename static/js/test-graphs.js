@@ -108,9 +108,9 @@ var icons = {
 };
 
 // Perform an API call to the cleaned Historical Wildfires in OR
-d3.json("../Resources/or_df.csv").then(function(wildfires) {
-    var updatedAt = wildfires.last_updated;
-    var response = wildfires.data.locations;
+d3.json("../Resources/or_df.csv").then(function(infoLocation) {
+    var updatedAt = infoLocation.last_updated;
+    var locationInfo = infoLocation.data.locations;
 
     // Create an object to keep the number of markers in locations
     var locationsCount = {
@@ -126,10 +126,10 @@ d3.json("../Resources/or_df.csv").then(function(wildfires) {
     var locationsRadiusCode;
 
     // loop through response (i.e., the csv) and push each element's information into the respective array
-    for (var i = 0; i < response.length; i++) {
+    for (var i = 0; i < locationInfo.length; i++) {
 
         // Create a new location object with properties of both location objects
-        var location = Object.assign({}, response[i]);
+        var location = Object.assign({}, locationInfo[i]);
         // If a location 
         if (!location.locationsCount) {
             locationsRadiusCode = "LOCATIONS";
