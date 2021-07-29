@@ -12,7 +12,9 @@ var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{
   accessToken: API_KEY
 });
 
-// 1975-1981 and 2015-2021
+/////////////////////////////
+// 1975-1981 and 2015-2021 //
+/////////////////////////////
 
 // Initialize all of the LayerGroups we'll be using
 var layers = {
@@ -167,6 +169,13 @@ d3.json("../Resources/or_df.csv").then(function(infoLocation) {
         // Call the updateLegend function, which will... update the legend!
         updateLegend(updatedAt, locationsCount);
     });
+    var myMap = L.map("heatmap", {
+        center: [43.8041, -120.5542],
+        zoom: 7,
+        layers: MediaStreamAudioDestinationNode,
+    });
+
+    L.control.layers(null, heatlayers).addTo(myMapq);
 });
 
 // Update the legend's innerHTML with the last updated time and location count
