@@ -1,8 +1,9 @@
-// graphing JS for graphs page
+// heatmap JS
+
 
 // create promise
 d3.csv("../Resources/or_df.csv").then(function(response) {
-    //console.log(response);
+    console.log(response);
 
     ///////////////////////////////////
     // grab necessary data from CSV //
@@ -17,13 +18,12 @@ d3.csv("../Resources/or_df.csv").then(function(response) {
     var reportArray = [];
     
     // initialize decade arrays to hold all data for each decade
-    var sixties = [];    var seventies = [];    var eighties = [];    var nineties = [];    
-    var double00s = [];    var twenty10s = [];    var twenty20s = [];
+    var early = [];
+    var late = [];
 
     // initialize decade location arrays to specifically hold locations of fires
-    var sixtiesLocs = [];    var seventiesLocs = [];    var eightiesLocs = [];    var ninetiesLocs = [];    
-    var double00sLocs = [];    var twenty10sLocs = [];    var twenty20sLocs = [];
-
+    var earlyLocs = [];
+    var lateLocs = [];
 
     // loop through response (i.e., the csv) and push each element's information into the respective array
     for (var i = 0; i < response.length; i++) {
@@ -45,110 +45,33 @@ d3.csv("../Resources/or_df.csv").then(function(response) {
 
         // create decade arrays as we loop through entire dataset
         var tempObj = {};
-            // 60s
-        if (year > 1959 && year <= 1969) {
+            // 1975-1981
+        if (year >= 1975 && year <= 1981) {
             tempObj["report_date"] = report_date;
             tempObj["county"] = county;
             tempObj["total_acres"] = acres;
             tempObj["general_cause"] = cause;
             tempObj["fire_year"] = year;
             tempObj["location"] = [lat,lon];
-            sixties.push(tempObj);
+            early.push(tempObj);
             tempObj = {};
-            sixtiesLocs.push([lat,lon]);
+            earlyLocs.push([lat,lon]);
         }
-            // 70s
-        else if (year > 1969 && year <= 1979) {
+            // 2015-2021
+        else if (year >= 2015 && year <= 2021) {
             tempObj["report_date"] = report_date;
             tempObj["county"] = county;
             tempObj["total_acres"] = acres;
             tempObj["general_cause"] = cause;
             tempObj["fire_year"] = year;
             tempObj["location"] = [lat,lon];
-            seventies.push(tempObj);
+            late.push(tempObj);
             tempObj = {};
-            seventiesLocs.push([lat,lon]);
+            lateLocs.push([lat,lon]);
         }
-            // 80s
-        else if (year > 1979 && year <= 1989) {
-            tempObj["report_date"] = report_date;
-            tempObj["county"] = county;
-            tempObj["total_acres"] = acres;
-            tempObj["general_cause"] = cause;
-            tempObj["fire_year"] = year;
-            tempObj["location"] = [lat,lon];
-            eighties.push(tempObj);
-            tempObj = {};
-            eightiesLocs.push([lat,lon]);
-        }
-            // 90s
-        else if (year > 1989 && year <= 1999) {
-            tempObj["report_date"] = report_date;
-            tempObj["county"] = county;
-            tempObj["total_acres"] = acres;
-            tempObj["general_cause"] = cause;
-            tempObj["fire_year"] = year;
-            tempObj["location"] = [lat,lon];
-            nineties.push(tempObj);
-            tempObj = {};
-            ninetiesLocs.push([lat,lon]);
-        }
-            // 2000s
-        else if (year > 1999 && year <= 2009) {
-            tempObj["report_date"] = report_date;
-            tempObj["county"] = county;
-            tempObj["total_acres"] = acres;
-            tempObj["general_cause"] = cause;
-            tempObj["fire_year"] = year;
-            tempObj["location"] = [lat,lon];
-            double00s.push(tempObj);
-            tempObj = {};
-            double00sLocs.push([lat,lon]);
-        }
-            // 2010s
-        else if (year > 2009 && year <= 2020) {
-            tempObj["report_date"] = report_date;
-            tempObj["county"] = county;
-            tempObj["total_acres"] = acres;
-            tempObj["general_cause"] = cause;
-            tempObj["fire_year"] = year;
-            tempObj["location"] = [lat,lon];
-            twenty10s.push(tempObj);
-            tempObj = {};
-            twenty10sLocs.push([lat,lon]);
-        }
-            // 2020s
-        else if (year > 2020) {
-            tempObj["report_date"] = report_date;
-            tempObj["county"] = county;
-            tempObj["total_acres"] = acres;
-            tempObj["general_cause"] = cause;
-            tempObj["fire_year"] = year;
-            tempObj["location"] = [lat,lon];
-            twenty20s.push(tempObj);
-            tempObj = {};
-            twenty20sLocs.push([lat,lon]);
-        }
+   
     }
-
-    /////////////////////////////////////////////////////////
-    // dynamically generate list of Decade options via d3 //    
-    ///////////////////////////////////////////////////////
-    var decades = ["60s", "70s", "80s", "90s", "00s", "10s","20s"];
-    
-    // create reference to select tag
-    var sel = d3.select("#selDataset");
-
-    // loop through decades
-    decades.forEach(decade => {
-
-        // create new option tag and save it to a variable
-        var option = sel.append("option");
-        option.attr("value", decade);
-        option.text(decade);
-
-    })
-
+    console.log(late.length, early.length);
     //////////////
     // Heatmap //
     ////////////
@@ -165,19 +88,15 @@ d3.csv("../Resources/or_df.csv").then(function(response) {
 
     // create array of decade location objects to loop through
     var decadeLocs = [
-        {"decade": "60s", "locations": sixtiesLocs},
-        {"decade": "70s", "locations": seventiesLocs}, 
-        {"decade": "80s", "locations": eightiesLocs},
-        {"decade": "90s", "locations": ninetiesLocs}, 
-        {"decade": "2000s", "locations": double00sLocs}, 
-        {"decade": "2010s", "locations": twenty10sLocs}, 
-        {"decade": "2020s", "locations": twenty20sLocs}
+        {"decade": "1975-1981", "locations": earlyLocs},
+        {"decade": "2015-2021", "locations": lateLocs}
     ];
 
     var heatlayers = {}
 
     decadeLocs.forEach(decade => {
-        //console.log(decade.decade);
+        console.log(decade.decade);
+        console.log(decade.locations);
         var heatlayer =  L.heatLayer(decade.locations, {
                 radius: 80,
                 blur: 15,
@@ -185,8 +104,8 @@ d3.csv("../Resources/or_df.csv").then(function(response) {
             });
         heatlayers[decade.decade] = heatlayer;
         heatlayer = null;
-    })
-
+    });
+    console.log(heatlayers);
     // create map connection to html id == heatmap
     var myMap = L.map("heatmap", {
         center: [43.8041, -120.5542],
@@ -196,4 +115,4 @@ d3.csv("../Resources/or_df.csv").then(function(response) {
 
     L.control.layers(null, heatlayers).addTo(myMap);
 
-})
+});
