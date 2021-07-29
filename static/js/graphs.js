@@ -94,18 +94,6 @@ d3.csv("../Resources/or_df.csv").then(function(response) {
 
     var heatlayers = {}
 
-    decadeLocs.forEach(decade => {
-        console.log(decade.decade);
-        console.log(decade.locations);
-        var heatlayer =  L.heatLayer(decade.locations, {
-                radius: 80,
-                blur: 15,
-                gradient: {.1: 'yellow', .6: 'orange', 1: 'red'}
-            });
-        heatlayers[decade.decade] = heatlayer;
-        heatlayer = null;
-    });
-    console.log(heatlayers);
     // create map connection to html id == heatmap
     var myMap = L.map("heatmap", {
         center: [43.8041, -120.5542],
@@ -113,6 +101,22 @@ d3.csv("../Resources/or_df.csv").then(function(response) {
         layers: streets,
     });
 
+    decadeLocs.forEach(decade => {
+        console.log(decade.decade);
+        console.log(decade.locations);
+        var heatlayer =  L.heatLayer(decade.locations, {
+                radius: 80,
+                blur: 2,
+                gradient: {.1: 'yellow', .6: 'orange', 1: 'red'}
+            });
+        if(decade.decade === "1975-1981") {
+            heatlayer.addTo(myMap);
+        }
+        heatlayers[decade.decade] = heatlayer;
+        heatlayer = null;
+    });
+
+    // add control and layers
     L.control.layers(null, heatlayers).addTo(myMap);
 
 });
