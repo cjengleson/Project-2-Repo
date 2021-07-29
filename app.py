@@ -5,8 +5,6 @@ import os
 
 app = Flask(__name__)
 
-app.listen(process.env.PORT)
-
 ENV = 'prod'
 
 if ENV == 'dev':
@@ -61,4 +59,5 @@ def graphs():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
