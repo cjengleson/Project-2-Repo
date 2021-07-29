@@ -96,7 +96,8 @@ d3.json(geoPath).then(function(geoData) {
         geoData.features.forEach(obj => {
             uniqueCounties.push(obj.properties.name);
         })
-
+        var sum19 = 0;
+        var sum20 = 0;
         // loop through each unique county, sum the acres per year and then add to the geoJson a new key representing the specific years acre-total
         uniqueCounties.forEach(county => {
             var earlySum = 0;
@@ -114,9 +115,11 @@ d3.json(geoPath).then(function(geoData) {
                     lateSum+= parseFloat(obj.total_acres);
                 }
             });
-            console.log(`${county}\n1975-1981: ${earlySum}\n2015-2021: ${lateSum}`);
+            console.log(`${county} County\n1975-1981: ${earlySum}\n2015-2021: ${lateSum}`);
+            sum19+=earlySum;
+            sum20+=lateSum;
         });
-        
+        console.log(`early sum: ${sum19}\nlate sum: ${sum20}`);
     });
 
     ///////////////////////////////////
