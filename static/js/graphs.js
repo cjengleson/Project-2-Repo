@@ -2,7 +2,7 @@
 
 
 // create promise
-d3.csv("../Resources/or_df.csv").then(function(response) {
+d3.csv("static/Resources/or_df.csv").then(function(response) {
     console.log(response);
 
     ///////////////////////////////////

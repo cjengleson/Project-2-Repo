@@ -2,62 +2,71 @@ from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import os
+import numpy as np
+import sqlalchemy
+from sqlalchemy.ext.automap import automap_base
+from sqlalchemy.orm import Session
+from sqlalchemy import create_engine, func
+from flask import Flask, jsonify
 
+################################################
+# DATABASE SETUP
+################################################
+engine = create_engine("sqlite:///fires.sqlite")
+
+# reflect an existing database into a new model
+Base = automap_base()
+# reflect the tables
+Base.prepare(engine, reflect=True)
+# save reference to the table
+Fires = Base.classes.fires
+
+################################################
+# FLASK SETUP
+################################################
 app = Flask(__name__)
 
-ENV = 'prod'
 
-if ENV == 'dev':
-    app.debug = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:0000@localhost/fires'
-else:
-    app.debug = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://dvhjrfztggksbc:d1ef21422f60799b1c4294baa8f2cc419726e143853f62225cf4ce0eaae196da@ec2-54-161-239-198.compute-1.amazonaws.com:5432/d18ntjsedisecs"
-
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db = SQLAlchemy(app)
-
-
-class Fires(db.Model):
-    __tablename__ = 'or_historical_fires'
-    id = db.Column(db.Integer, primary_key=True)
-    fire_year = db.Column(db.Integer)
-    report_date = db.Column(db.DateTime, default=datetime.utcnow)
-    county = db.Column(db.String(200))
-    latitude = db.Column(db.Float)
-    longitude = db.Column(db.Float)
-    total_acres = db.Column(db.Float)
-    general_cause = db.Column(db.String(200))
-
-    def __init__(self, fire_year, report_date, county, latitude, longitude, total_acres, general_cause):
-        self.fire_year = fire_year
-        self.report_date = report_date
-        self.county = county
-        self.latitude = latitude
-        self.longitude = longitude
-        self.total_acres = total_acres
-        self.general_cause = general_cause
-
-
+################################################
+# FLASK ROUTES
+################################################
 @app.route('/')
 def index():
-    return render_template("templates/index.html")
+    return render_template("index.html")
 
 
 @app.route('/graphs.html')
 def graphs():
-    return render_template("templates/graphs.html")
+    return render_template("graphs.html")
 
 
-# @app.route('/data')
-# def data():
-    # return render_template("...html")
+@app.route('/choropleth.html')
+def data():
+    return render_template("choropleth.html")
 
-# @app.route('/json')
-# def data():
+
+@app.route('/json')
+def json():
+    session = Session(engine)
+
+    results = session.query(Fires.id, Fires.fire_year, Fires.report_date, Fires.county,
+                            Fires.latitude, Fires.longitude, Fires.total_acres, Fires.general_cause).all()
+    session.close()
+
+    all_fires = []
+    for id, fire_year, report_date, county, latitude, longitude, total_acres, general_cause in results:
+        fires_dict = {}
+        fires_dict["id"] = id
+        fires_dict["report_date"] = report_date
+        fires_dict["county"] = county
+        fires_dict["latitude"] = latitude
+        fires_dict["longitude"] = longitude
+        fires_dict["total_acres"] = total_acres
+        fires_dict["general_cause"] = general_cause
+        all_fires.append(fires_dict)
+
+    return jsonify(all_fires)
 
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(debug=True)

@@ -19,7 +19,7 @@ L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 }).addTo(myMap);
 
 // set var to geoJson path
-var geoPath = "../../Resources/us-county-boundaries.geojson";
+var geoPath = "static/Resources/us-county-boundaries.geojson";
 
 // Grab data with d3 promise
 d3.json(geoPath).then(function(geoData) {
@@ -30,7 +30,7 @@ d3.json(geoPath).then(function(geoData) {
     /////////////////////////////////////////
 
     // access the CSV via d3 promise
-    d3.csv("../../Resources/or_df.csv").then(function(response) {
+    d3.csv("static/Resources/or_df.csv").then(function(response) {
 
         /////////////////////////////////////////////
         // grab necessary data from wildfires CSV //
